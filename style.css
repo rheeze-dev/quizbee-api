@@ -1,0 +1,87 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: .2fr .5fr .5fr .3fr .3fr auto;
+  grid-template-areas: 
+    "about timer contact"
+    "cattegory questions score"
+    "high-score questions score"
+    "hint answer submit"
+    "attempts-left answer reset"
+    "footer footer footer";
+  gap: .5rem;
+  text-align: center;
+  height: 100vh;
+}
+
+#about {
+    background: rgb(233, 227, 196);
+    grid-area: about;
+}
+
+#timer {
+    background: rgb(233, 227, 196);
+    grid-area: timer;
+}
+
+#contact {
+    background: rgb(233, 227, 196);
+    grid-area: contact;
+}
+
+#cattegory {
+    background: rgb(233, 227, 196);
+    grid-area: cattegory;
+}
+
+#questions {
+    background: rgb(233, 227, 196);
+    grid-area: questions;
+}
+
+#high-score {
+    background: rgb(233, 227, 196);
+    grid-area: high-score;
+}
+
+
+#score {
+    background: rgb(233, 227, 196);
+    grid-area: score;
+}
+
+#hint {
+    background: rgb(233, 227, 196);
+    grid-area: hint;
+}
+
+#answer {
+    background: rgb(233, 227, 196);
+    grid-area: answer;
+}
+
+#submit {
+    background: rgb(233, 227, 196);
+    grid-area: submit;
+}
+
+#attempts-left {
+    background: rgb(233, 227, 196);
+    grid-area: attempts-left;
+}
+
+#reset {
+    background: rgb(233, 227, 196);
+    grid-area: reset;
+}
+
+footer {
+    background: rgb(233, 227, 196);
+    grid-area: footer;
+}
