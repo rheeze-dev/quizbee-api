@@ -7,7 +7,7 @@
 .container {
     display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  grid-template-rows: .2fr .5fr .5fr .3fr .3fr auto;
+  grid-template-rows: .2fr .2fr .5fr .3fr .3fr auto;
   grid-template-areas: 
     "about timer contact"
     "cattegory questions score"
@@ -38,6 +38,7 @@
 #cattegory {
     background: rgb(233, 227, 196);
     grid-area: cattegory;
+    padding: 10px;
 }
 
 #questions {
@@ -85,3 +86,24 @@ footer {
     background: rgb(233, 227, 196);
     grid-area: footer;
 }
+
+.buttons {
+    height: 60%;
+    width: 60%;
+    margin: 30px;
+    font-size: 2rem;
+    border-radius: 15px;
+}
+
+.buttons:active {
+  transform: translateY(10px);
+}
+
+.btn-about, .btn-contact {
+    margin: 20px;
+}
+
+.options {
+    font-size: 2rem;
+}
+
