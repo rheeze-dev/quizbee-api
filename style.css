@@ -13,7 +13,7 @@
     "cattegory questions score"
     "high-score questions score"
     "hint answer submit"
-    "attempts-left answer reset"
+    "attempts-left start-game reset"
     "footer footer footer";
   gap: .5rem;
   text-align: center;
@@ -77,6 +77,11 @@
     grid-area: attempts-left;
 }
 
+#start-game {
+    background: rgb(233, 227, 196);
+    grid-area: start-game;
+}
+
 #reset {
     background: rgb(233, 227, 196);
     grid-area: reset;
@@ -87,23 +92,75 @@ footer {
     grid-area: footer;
 }
 
+p {
+    font-size: 3rem;
+    padding-top: 10px;
+}
+
 .buttons {
     height: 60%;
     width: 60%;
     margin: 30px;
     font-size: 2rem;
     border-radius: 15px;
+    cursor: pointer;
 }
 
 .buttons:active {
-  transform: translateY(10px);
+  transform: scale(0.9);
 }
 
 .btn-about, .btn-contact {
     margin: 20px;
 }
 
+.btn-start-game:active {
+    transform: scale(0.9);
+}
+
+.btn-start-game:hover {
+    background: rgb(226, 212, 154);
+  }
+
+.btn-start-game {
+    background: rgb(233, 227, 196);
+    height: 100%;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    font-size: 2.5rem;
+}
+
 .options {
     font-size: 2rem;
 }
 
+.text-high-score {
+    font-size: 10rem;
+    padding: 0;
+}
+
+.text-score {
+    font-size: 18rem;
+    padding: 0;
+}
+
+.text-attempts-left {
+    font-size: 5rem;
+}
+
+#input-answer {
+    height: 120px;
+    width: 850px;
+    margin: 25px;
+    font-size: 5rem;
+    padding: 10px;
+}
+
+.timer-display {
+    font-size: 5rem;
+}
+
+.display-questions {
+    font-size: 5rem;
+}

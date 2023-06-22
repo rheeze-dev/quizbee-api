@@ -11,7 +11,9 @@
         <div id="about">
             <button class="buttons btn-about">About</button>
         </div>
-        <div id="timer">timer</div>
+        <div id="timer">
+            <p class="timer-display">60 seconds</p>
+        </div>
         <div id="contact">
             <button class="buttons btn-contact">Contact</button>
         </div>
@@ -34,22 +36,38 @@
                 <option value="sportsleisure">Sports and leisure</option>
               </select>
         </div>
-        <div id="high-score">high-score</div>
-        <div id="questions">questions</div>
-        <div id="score">score</div>
+        <div id="high-score">
+            <p>High score: </p>
+            <p class="text-high-score">0</p>
+        </div>
+        <div id="questions">
+            <p class="display-questions"></p>
+        </div>
+        <div id="score">
+            <p>Score: </p>
+            <p class="text-score">0</p>
+        </div>
         <div id="hint">
             <button class="buttons btn-hint">Hint</button>
         </div>
-        <div id="answer">answer</div>
+        <div id="answer">
+            <input type="text" id="input-answer">
+        </div>
+        <div id="start-game">
+            <button class="btn-start-game">Click here to start the game.</button>
+        </div>
         <div id="submit">
             <button class="buttons btn-submit">Submit</button>
         </div>
-        <div id="attempts-left">attempts-left</div>
+        <div id="attempts-left">
+            <p>Lives left: </p>
+            <p class="text-attempts-left">5</p>
+        </div>
         <div id="reset">
             <button class="buttons btn-reset">Reset</button>
         </div>
         <footer>footer</footer>
     </div>
-    <script src="./donutMaker.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
