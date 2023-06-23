@@ -7,7 +7,67 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Quiz Bee API</h1>
-    <script src="./donutMaker.js"></script>
+    <div class="container">
+        <div id="about">
+            <button class="buttons btn-about">About</button>
+        </div>
+        <div id="timer">
+            <p class="timer-display">60 seconds</p>
+        </div>
+        <div id="contact">
+            <button class="buttons btn-contact">Contact</button>
+        </div>
+        <div id="cattegory">
+            <label class="options">Choose a cattegory:</label>
+            <select class="options" id="options-cattegory">
+                <option value="language">Language</option>
+                <option value="artliterature">Artliterature</option>
+                <option value="sciencenature">Science and nature</option>
+                <option value="general">General</option>
+                <option value="fooddrink">Food and drink</option>
+                <option value="peopleplaces">People and places</option>
+                <option value="geography">Geography</option>
+                <option value="historyholidays">History and holidays</option>
+                <option value="entertainment">Entertainment</option>
+                <option value="toysgames">Toys and games</option>
+                <option value="music">Music</option>
+                <option value="mathematics">Mathematics</option>
+                <option value="religionmythology">Religion and mythology</option>
+                <option value="sportsleisure">Sports and leisure</option>
+              </select>
+        </div>
+        <div id="high-score">
+            <p>High score: </p>
+            <p class="text-high-score">0</p>
+        </div>
+        <div id="questions">
+            <p class="display-questions"></p>
+        </div>
+        <div id="score">
+            <p>Score: </p>
+            <p class="text-score">0</p>
+        </div>
+        <div id="hint">
+            <button class="buttons btn-hint">Hint</button>
+        </div>
+        <div id="answer">
+            <input type="text" id="input-answer">
+        </div>
+        <div id="start-game">
+            <button class="btn-start-game">Click here to start the game.</button>
+        </div>
+        <div id="submit">
+            <button class="buttons btn-submit">Submit</button>
+        </div>
+        <div id="attempts-left">
+            <p>Lives left: </p>
+            <p class="text-attempts-left">5</p>
+        </div>
+        <div id="reset">
+            <button class="buttons btn-reset">Reset</button>
+        </div>
+        <footer>footer</footer>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
