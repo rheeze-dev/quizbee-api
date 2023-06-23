@@ -24,14 +24,24 @@ async function fetchQuestion(category) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    console.log(data[0]);
-    let answerGuide = "";
-    for(let i = 0; i < data[0].answer.length; i++) {
-        answerGuide += "_ ";
-    }
-    console.log(answerGuide);
+    const answerGuide = showLetters(data[0]);
     document.querySelector("#questions").innerHTML = 
     `<p class="display-questions">${data[0].question}</p>
     <p class="answer-length">Answer length is: ${data[0].answer.length}</p>
-    <p class="answer-length">${answerGuide}</p>`;
+    <p class="answer-length">${answerGuide.split('').join(' ')}</p>`;
+}
+
+function showLetters(data) {
+    let answer = data.answer;
+    const max = data.answer.length;
+    console.log(data.answer);
+    for(let i = 0; i < max / 2; i++) {
+        const randomNumber = Math.round(Math.random() * max);
+        answer = setCharAt(answer, randomNumber, '_');
+    }
+    return answer;
+}
+
+function setCharAt(str,index,char) {
+    return str.substring(0,index) + char + str.substring(index+1);
 }
