@@ -1,13 +1,15 @@
 const category = document.querySelector("#options-category");
 const btnSubmit = document.querySelector(".btn-submit");
+const btnStart = document.querySelector(".btn-start-game");
 
 document.querySelector("footer").innerHTML = "Copyright &copy; " + new Date().getFullYear();
 
-btnSubmit.onclick = () => {
+btnStart.onclick = () => {
     console.log(category.value);
+    fetchQuestion(category.value);
 }
 
-fetchQuestion(category.value);
+// fetchQuestion(category.value);
 
 async function fetchQuestion(category) {
     const response = await fetch(
@@ -38,7 +40,7 @@ async function fetchQuestion(category) {
 function showLetters(data) {
     let answer = data.answer;
     const max = data.answer.length;
-    // console.log(data.answer);
+    console.log(data.answer);
     for(let i = 0; i < max; i++) {
         const randomNumber = Math.floor(Math.random() * max);
         if(answer.charAt(randomNumber) == " ") continue;
