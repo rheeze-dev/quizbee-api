@@ -10,7 +10,7 @@
   grid-template-rows: .2fr .2fr .5fr .3fr .3fr auto;
   grid-template-areas: 
     "about timer contact"
-    "cattegory questions score"
+    "category questions score"
     "high-score questions score"
     "hint answer submit"
     "attempts-left start-game reset"
@@ -35,9 +35,9 @@
     grid-area: contact;
 }
 
-#cattegory {
+#category {
     background: rgb(233, 227, 196);
-    grid-area: cattegory;
+    grid-area: category;
     padding: 10px;
 }
 
@@ -162,5 +162,9 @@ p {
 }
 
 .display-questions {
-    font-size: 5rem;
+    font-size: 4rem;
+}
+
+.answer-length {
+    font-size: 2.5rem;
 }
