@@ -4,9 +4,18 @@ const btnStart = document.querySelector(".btn-start-game");
 
 document.querySelector("footer").innerHTML = "Copyright &copy; " + new Date().getFullYear();
 
+let timer = 60;
 btnStart.onclick = () => {
     console.log(category.value);
     fetchQuestion(category.value);
+    const timerInterval = setInterval(() => {
+        timer--;
+        document.querySelector(".timer-display").innerHTML = `${timer} ${timer > 1 ? "seconds" : "second"}`;
+        if(timer == 0) {
+            clearInterval(timerInterval);
+            document.querySelector(".timer-display").innerHTML = `Time is up!`;
+        }
+    }, 1000)
 }
 
 // fetchQuestion(category.value);
@@ -52,3 +61,4 @@ function showLetters(data) {
 function setCharAt(str,index,char) {
     return str.substring(0,index) + char + str.substring(index+1);
 }
+
