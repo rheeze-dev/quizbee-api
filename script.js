@@ -7,6 +7,7 @@ document.querySelector("footer").innerHTML = "Copyright &copy; " + new Date().ge
 let timer = 60;
 btnStart.onclick = () => {
     console.log(category.value);
+    document.querySelector(".btn-start-game").disabled = true;
     fetchQuestion(category.value);
     const timerInterval = setInterval(() => {
         timer--;
@@ -14,6 +15,7 @@ btnStart.onclick = () => {
         if(timer == 0) {
             clearInterval(timerInterval);
             document.querySelector(".timer-display").innerHTML = `Time is up!`;
+            document.querySelector(".btn-start-game").disabled = false;
         }
     }, 1000)
 }
