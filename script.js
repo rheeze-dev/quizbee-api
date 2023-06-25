@@ -1,21 +1,27 @@
 const category = document.querySelector("#options-category");
 const btnSubmit = document.querySelector(".btn-submit");
 const btnStart = document.querySelector(".btn-start-game");
+const timerDisplay = document.querySelector(".timer-display");
+let questionNumber = 1;
+let timer = 5;
 
 document.querySelector("footer").innerHTML = "Copyright &copy; " + new Date().getFullYear();
 
-let timer = 60;
 btnStart.onclick = () => {
     console.log(category.value);
-    document.querySelector(".btn-start-game").disabled = true;
+    questionNumber++;
+    timerDisplay.innerHTML = `${timer} ${timer > 1 ? "seconds" : "second"}`;
+    btnStart.disabled = true;
     fetchQuestion(category.value);
     const timerInterval = setInterval(() => {
         timer--;
-        document.querySelector(".timer-display").innerHTML = `${timer} ${timer > 1 ? "seconds" : "second"}`;
+        timerDisplay.innerHTML = `${timer} ${timer > 1 ? "seconds" : "second"}`;
         if(timer == 0) {
             clearInterval(timerInterval);
-            document.querySelector(".timer-display").innerHTML = `Time is up!`;
-            document.querySelector(".btn-start-game").disabled = false;
+            timerDisplay.innerHTML = `Time is up!`;
+            btnStart.disabled = false;
+            btnStart.innerHTML = `Click here to start question ${questionNumber}`;
+            timer = 5;
         }
     }, 1000)
 }
