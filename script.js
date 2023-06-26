@@ -2,31 +2,37 @@ const category = document.querySelector("#options-category");
 const btnSubmit = document.querySelector(".btn-submit");
 const btnStart = document.querySelector(".btn-start-game");
 const timerDisplay = document.querySelector(".timer-display");
+const inputFieldAnswer = document.querySelector("#input-answer");
 let questionNumber = 1;
-let timer = 5;
+let timer = 10;
+let score = 0;
+let isSubmitBtnClicked = false;
 
 document.querySelector("footer").innerHTML = "Copyright &copy; " + new Date().getFullYear();
 
 btnStart.onclick = () => {
-    console.log(category.value);
+    inputFieldAnswer.value = "";
     questionNumber++;
-    timerDisplay.innerHTML = `${timer} ${timer > 1 ? "seconds" : "second"}`;
     btnStart.disabled = true;
+    btnSubmit.disabled = false;
     fetchQuestion(category.value);
     const timerInterval = setInterval(() => {
         timer--;
         timerDisplay.innerHTML = `${timer} ${timer > 1 ? "seconds" : "second"}`;
-        if(timer == 0) {
-            clearInterval(timerInterval);
-            timerDisplay.innerHTML = `Time is up!`;
-            btnStart.disabled = false;
-            btnStart.innerHTML = `Click here to start question ${questionNumber}`;
-            timer = 5;
-        }
+            if(timer == 0) {
+                isSubmitBtnClicked = true;
+                btnSubmit.click();
+            }
     }, 1000)
-}
 
-// fetchQuestion(category.value);
+    const submitBtnChecker = setInterval(() => {
+        if(isSubmitBtnClicked) {
+            clearInterval(timerInterval);
+            clearInterval(submitBtnChecker);
+            isSubmitBtnClicked = false;
+        }
+    }, 1);
+}
 
 async function fetchQuestion(category) {
     const response = await fetch(
@@ -43,7 +49,6 @@ async function fetchQuestion(category) {
     }
     const data = await response.json();
     const answerGuide = showLetters(data[0]);
-    // console.log(answerGuide.length);
     let numberOfWords = 1;
     for(let i = 0; i < answerGuide.length; i++) {
         if(answerGuide.charAt(i) == " ") numberOfWords++;
@@ -63,10 +68,24 @@ function showLetters(data) {
         if(answer.charAt(randomNumber) == " ") continue;
         answer = setCharAt(answer, randomNumber, '_');
     }
+    btnSubmit.onclick = () => {
+        isSubmitBtnClicked = true;
+        if(inputFieldAnswer.value.toUpperCase() === data.answer.toUpperCase()) {
+            score++;
+            document.querySelector(".text-score").innerHTML = score;
+            timerDisplay.innerHTML = `Correct!`;
+        }
+        else {
+            timerDisplay.innerHTML = `${data.answer}`;
+        }
+        btnStart.disabled = false;
+        btnSubmit.disabled = true;
+        btnStart.innerHTML = `Click here to start question #${questionNumber}`;
+        timer = 10;
+    }
     return answer;
 }
 
 function setCharAt(str,index,char) {
     return str.substring(0,index) + char + str.substring(index+1);
 }
-
