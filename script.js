@@ -9,7 +9,6 @@ const livesLeft = document.querySelector(".text-attempts-left");
 const questionsText = document.querySelector("#questions");
 const btnReset = document.querySelector(".btn-reset");
 const btnHint = document.querySelector(".btn-hint");
-let numberOfWords = 1;
 let highScore = 0;
 let questionNumber;
 let timer;
@@ -20,12 +19,13 @@ let lives;
 document.querySelector("footer").innerHTML = "Copyright &copy; " + new Date().getFullYear();
 
 getDefaultValues();
-
 btnStart.onclick = () => {
     inputFieldAnswer.value = "";
     questionNumber++;
     btnStart.disabled = true;
     btnSubmit.disabled = false;
+    btnHint.disabled = false;
+    btnReset.disabled = false;
     fetchQuestion(category.value);
     const timerInterval = setInterval(() => {
         timer--;
@@ -48,8 +48,7 @@ btnStart.onclick = () => {
 btnReset.onclick = () => {
     getDefaultValues();
     isSubmitBtnClicked = true;
-    console.log("Reached");
-    questionsText.innerHTML = `<p style="color:blue;font-size:8rem;">Reset has been successful!</p>`;
+    questionsText.innerHTML = `<p style="color:blue;font-size:8rem;">Game has been reset!</p>`;
 }
 
 async function fetchQuestion(category) {
@@ -67,9 +66,7 @@ async function fetchQuestion(category) {
     }
     const data = await response.json();
     const answerGuide = showLetters(data[0]);
-    for(let i = 0; i < answerGuide.length; i++) {
-        if(answerGuide.charAt(i) == " ") numberOfWords++;
-    }
+    let numberOfWords = countNumberOfWords(answerGuide);
     questionsText.innerHTML = 
     `<p class="display-questions">${data[0].question}</p>
     <p class="answer-length">Answer is ${numberOfWords} ${numberOfWords == 1 ? "word" : "words"} with ${data[0].answer.length} letters.</p>
@@ -103,18 +100,21 @@ function showLetters(data) {
         }
         btnStart.disabled = false;
         btnSubmit.disabled = true;
+        btnHint.disabled = true;
         btnStart.innerHTML = `Click here to start question #${questionNumber}`;
-        livesLeft.innerHTML = lives;
+        livesLeft.innerHTML = parseFloat(lives).toFixed(1);
         if(lives <= 0) {
             btnStart.disabled = true;
             livesLeft.innerHTML = `<p style="color:red;font-size:5rem;">0</p>`;
             questionsText.innerHTML = `<p style="color:red;font-size:8rem;">Game Over!</p>`;
         }
-        timer = 10;
+        timer = 60;
     }
 
     let answerChar;
     btnHint.onclick = () => {
+        lives -= .1;
+        livesLeft.innerHTML = parseFloat(lives).toFixed(1);
         for(let i = 0; i < max; i++) {
             const randomNumber = Math.floor(Math.random() * max);
             if(answer.charAt(randomNumber) != "_") continue;
@@ -123,6 +123,7 @@ function showLetters(data) {
             }
             answer = setCharAt(answer, randomNumber, answerChar);
         }
+        let numberOfWords = countNumberOfWords(data.answer);
         questionsText.innerHTML = 
         `<p class="display-questions">${data.question}</p>
         <p class="answer-length">Answer is ${numberOfWords} ${numberOfWords == 1 ? "word" : "words"} with ${data.answer.length} letters.</p>
@@ -136,6 +137,14 @@ function setCharAt(str,index,char) {
     return str.substring(0,index) + char + str.substring(index+1);
 }
 
+function countNumberOfWords(words) {
+    let numberOfWords = 1;
+    for(let i = 0; i < words.length; i++) {
+        if(words.charAt(i) == " ") numberOfWords++;
+    }
+    return numberOfWords;
+}
+
 window.addEventListener("keypress", function(e) {
     if(e.key === "Enter") {
         btnSubmit.click();
@@ -145,7 +154,7 @@ window.addEventListener("keypress", function(e) {
 function getDefaultValues() {
     score = 0;
     questionNumber = 1;
-    timer = 10;
+    timer = 60;
     btnSubmit.disabled = true;
     btnStart.disabled = false;
     isSubmitBtnClicked = false;
@@ -156,4 +165,6 @@ function getDefaultValues() {
     inputFieldAnswer.value = "";
     lives = 5;
     livesLeft.innerHTML = lives;
+    btnHint.disabled = true;
+    btnReset.disabled = true;
 }
