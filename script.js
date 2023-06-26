@@ -8,6 +8,8 @@ const highScoreText = document.querySelector(".text-high-score");
 const livesLeft = document.querySelector(".text-attempts-left");
 const questionsText = document.querySelector("#questions");
 const btnReset = document.querySelector(".btn-reset");
+const btnHint = document.querySelector(".btn-hint");
+let numberOfWords = 1;
 let highScore = 0;
 let questionNumber;
 let timer;
@@ -65,7 +67,6 @@ async function fetchQuestion(category) {
     }
     const data = await response.json();
     const answerGuide = showLetters(data[0]);
-    let numberOfWords = 1;
     for(let i = 0; i < answerGuide.length; i++) {
         if(answerGuide.charAt(i) == " ") numberOfWords++;
     }
@@ -84,6 +85,7 @@ function showLetters(data) {
         if(answer.charAt(randomNumber) == " ") continue;
         answer = setCharAt(answer, randomNumber, '_');
     }
+
     btnSubmit.onclick = () => {
         isSubmitBtnClicked = true;
         if(inputFieldAnswer.value.toUpperCase() === data.answer.toUpperCase()) {
@@ -110,7 +112,28 @@ function showLetters(data) {
         }
         timer = 10;
     }
+
+    let answerChar;
+    btnHint.onclick = () => {
+        for(let i = 0; i < max; i++) {
+            const randomNumber = Math.floor(Math.random() * max);
+            if(answer.charAt(randomNumber) != "_") continue;
+            else {
+                answerChar = data.answer[randomNumber];
+            }
+            answer = setCharAt(answer, randomNumber, answerChar);
+        }
+        questionsText.innerHTML = 
+        `<p class="display-questions">${data.question}</p>
+        <p class="answer-length">Answer is ${numberOfWords} ${numberOfWords == 1 ? "word" : "words"} with ${data.answer.length} letters.</p>
+        <p class="answer-length">${answer.split('').join(',')}</p>`;
+    }
+    
     return answer;
+}
+
+function setCharAt(str,index,char) {
+    return str.substring(0,index) + char + str.substring(index+1);
 }
 
 window.addEventListener("keypress", function(e) {
@@ -118,10 +141,6 @@ window.addEventListener("keypress", function(e) {
         btnSubmit.click();
     }
 });
-
-function setCharAt(str,index,char) {
-    return str.substring(0,index) + char + str.substring(index+1);
-}
 
 function getDefaultValues() {
     score = 0;
