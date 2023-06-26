@@ -86,6 +86,12 @@ function showLetters(data) {
     return answer;
 }
 
+window.addEventListener("keypress", function(e) {
+    if(e.key === "Enter") {
+        btnSubmit.click();
+    }
+});
+
 function setCharAt(str,index,char) {
     return str.substring(0,index) + char + str.substring(index+1);
 }
