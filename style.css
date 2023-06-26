@@ -168,3 +168,8 @@ p {
 .answer-length {
     font-size: 2.2rem;
 }
+
+.btn-reset {
+    background: black;
+    color: white;
+}
