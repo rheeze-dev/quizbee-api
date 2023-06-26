@@ -5,15 +5,19 @@ const timerDisplay = document.querySelector(".timer-display");
 const inputFieldAnswer = document.querySelector("#input-answer");
 const scoreText = document.querySelector(".text-score");
 const highScoreText = document.querySelector(".text-high-score");
+const livesLeft = document.querySelector(".text-attempts-left");
+const questionsText = document.querySelector("#questions");
+const btnReset = document.querySelector(".btn-reset");
 let highScore = 0;
 let questionNumber;
 let timer;
 let score;
 let isSubmitBtnClicked;
+let lives;
 
 document.querySelector("footer").innerHTML = "Copyright &copy; " + new Date().getFullYear();
 
-setDefaultValues();
+getDefaultValues();
 
 btnStart.onclick = () => {
     inputFieldAnswer.value = "";
@@ -39,10 +43,11 @@ btnStart.onclick = () => {
     }, 1);
 }
 
-document.querySelector(".btn-reset").onclick = () => {
-    setDefaultValues();
+btnReset.onclick = () => {
+    getDefaultValues();
     isSubmitBtnClicked = true;
-    document.querySelector("#questions").innerHTML = "<p>Reset has been successful!</p>";
+    console.log("Reached");
+    questionsText.innerHTML = `<p style="color:blue;font-size:8rem;">Reset has been successful!</p>`;
 }
 
 async function fetchQuestion(category) {
@@ -64,7 +69,7 @@ async function fetchQuestion(category) {
     for(let i = 0; i < answerGuide.length; i++) {
         if(answerGuide.charAt(i) == " ") numberOfWords++;
     }
-    document.querySelector("#questions").innerHTML = 
+    questionsText.innerHTML = 
     `<p class="display-questions">${data[0].question}</p>
     <p class="answer-length">Answer is ${numberOfWords} ${numberOfWords == 1 ? "word" : "words"} with ${data[0].answer.length} letters.</p>
     <p class="answer-length">${answerGuide.split('').join(',')}</p>`;
@@ -92,10 +97,17 @@ function showLetters(data) {
         }
         else {
             timerDisplay.innerHTML = `${data.answer}`;
+            lives--;
         }
         btnStart.disabled = false;
         btnSubmit.disabled = true;
         btnStart.innerHTML = `Click here to start question #${questionNumber}`;
+        livesLeft.innerHTML = lives;
+        if(lives <= 0) {
+            btnStart.disabled = true;
+            livesLeft.innerHTML = `<p style="color:red;font-size:5rem;">0</p>`;
+            questionsText.innerHTML = `<p style="color:red;font-size:8rem;">Game Over!</p>`;
+        }
         timer = 10;
     }
     return answer;
@@ -111,7 +123,7 @@ function setCharAt(str,index,char) {
     return str.substring(0,index) + char + str.substring(index+1);
 }
 
-function setDefaultValues() {
+function getDefaultValues() {
     score = 0;
     questionNumber = 1;
     timer = 10;
@@ -123,4 +135,6 @@ function setDefaultValues() {
     btnStart.innerHTML = `Click here to start question #${questionNumber}`;
     timerDisplay.innerHTML = `60 seconds`;
     inputFieldAnswer.value = "";
+    lives = 5;
+    livesLeft.innerHTML = lives;
 }
