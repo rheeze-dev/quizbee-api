@@ -113,7 +113,9 @@ function showLetters(data) {
 
     let answerChar;
     btnHint.onclick = () => {
-        lives -= .1;
+        lives = parseFloat((lives - .1).toFixed(1));
+        if(lives <= 0) btnSubmit.click();
+        else {
         livesLeft.innerHTML = parseFloat(lives).toFixed(1);
         for(let i = 0; i < max; i++) {
             const randomNumber = Math.floor(Math.random() * max);
@@ -128,6 +130,7 @@ function showLetters(data) {
         `<p class="display-questions">${data.question}</p>
         <p class="answer-length">Answer is ${numberOfWords} ${numberOfWords == 1 ? "word" : "words"} with ${data.answer.length} letters.</p>
         <p class="answer-length">${answer.split('').join(',')}</p>`;
+        }
     }
     
     return answer;
@@ -136,6 +139,16 @@ function showLetters(data) {
 function setCharAt(str,index,char) {
     return str.substring(0,index) + char + str.substring(index+1);
 }
+
+// function checkLivesLeft(lives) {
+//     if(lives <= 0) {
+//         console.log("Reached");
+//         isSubmitBtnClicked = true;
+//         btnStart.disabled = true;
+//         livesLeft.innerHTML = `<p style="color:red;font-size:5rem;">0</p>`;
+//         questionsText.innerHTML = `<p style="color:red;font-size:8rem;">Game Over!</p>`;
+//     }
+// }
 
 function countNumberOfWords(words) {
     let numberOfWords = 1;
