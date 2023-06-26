@@ -6,6 +6,7 @@ const inputFieldAnswer = document.querySelector("#input-answer");
 let questionNumber = 1;
 let timer = 10;
 let score = 0;
+let highScore = 0;
 let isSubmitBtnClicked = false;
 
 document.querySelector("footer").innerHTML = "Copyright &copy; " + new Date().getFullYear();
@@ -72,6 +73,10 @@ function showLetters(data) {
         isSubmitBtnClicked = true;
         if(inputFieldAnswer.value.toUpperCase() === data.answer.toUpperCase()) {
             score++;
+            if(score > highScore) {
+                highScore = score;
+                document.querySelector(".text-high-score").innerHTML = highScore;
+            }
             document.querySelector(".text-score").innerHTML = score;
             timerDisplay.innerHTML = `Correct!`;
         }
