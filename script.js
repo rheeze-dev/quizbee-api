@@ -3,13 +3,17 @@ const btnSubmit = document.querySelector(".btn-submit");
 const btnStart = document.querySelector(".btn-start-game");
 const timerDisplay = document.querySelector(".timer-display");
 const inputFieldAnswer = document.querySelector("#input-answer");
-let questionNumber = 1;
-let timer = 10;
-let score = 0;
+const scoreText = document.querySelector(".text-score");
+const highScoreText = document.querySelector(".text-high-score");
 let highScore = 0;
-let isSubmitBtnClicked = false;
+let questionNumber;
+let timer;
+let score;
+let isSubmitBtnClicked;
 
 document.querySelector("footer").innerHTML = "Copyright &copy; " + new Date().getFullYear();
+
+setDefaultValues();
 
 btnStart.onclick = () => {
     inputFieldAnswer.value = "";
@@ -33,6 +37,12 @@ btnStart.onclick = () => {
             isSubmitBtnClicked = false;
         }
     }, 1);
+}
+
+document.querySelector(".btn-reset").onclick = () => {
+    setDefaultValues();
+    isSubmitBtnClicked = true;
+    document.querySelector("#questions").innerHTML = "<p>Reset has been successful!</p>";
 }
 
 async function fetchQuestion(category) {
@@ -75,9 +85,9 @@ function showLetters(data) {
             score++;
             if(score > highScore) {
                 highScore = score;
-                document.querySelector(".text-high-score").innerHTML = highScore;
+                highScoreText.innerHTML = highScore;
             }
-            document.querySelector(".text-score").innerHTML = score;
+            scoreText.innerHTML = score;
             timerDisplay.innerHTML = `Correct!`;
         }
         else {
@@ -99,4 +109,18 @@ window.addEventListener("keypress", function(e) {
 
 function setCharAt(str,index,char) {
     return str.substring(0,index) + char + str.substring(index+1);
+}
+
+function setDefaultValues() {
+    score = 0;
+    questionNumber = 1;
+    timer = 10;
+    btnSubmit.disabled = true;
+    btnStart.disabled = false;
+    isSubmitBtnClicked = false;
+    scoreText.innerHTML = score;
+    highScoreText.innerHTML = highScore;
+    btnStart.innerHTML = `Click here to start question #${questionNumber}`;
+    timerDisplay.innerHTML = `60 seconds`;
+    inputFieldAnswer.value = "";
 }
