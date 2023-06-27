@@ -1,7 +1,7 @@
 const category = document.querySelector("#options-category");
 const btnSubmit = document.querySelector(".btn-submit");
 const btnStart = document.querySelector(".btn-start-game");
-const timerDisplay = document.querySelector(".timer-display");
+const timerDisplay = document.querySelector("#timer");
 const inputFieldAnswer = document.querySelector("#input-answer");
 const scoreText = document.querySelector(".text-score");
 const highScoreText = document.querySelector(".text-high-score");
@@ -16,8 +16,6 @@ let score;
 let isSubmitBtnClicked;
 let lives;
 
-document.querySelector("footer").innerHTML = "Copyright &copy; " + new Date().getFullYear();
-
 getDefaultValues();
 btnStart.onclick = () => {
     inputFieldAnswer.value = "";
@@ -26,10 +24,11 @@ btnStart.onclick = () => {
     btnSubmit.disabled = false;
     btnHint.disabled = false;
     btnReset.disabled = false;
+    btnReset.style.display = "none";
     fetchQuestion(category.value);
     const timerInterval = setInterval(() => {
+        timerDisplay.innerHTML = `<p class="timer-display">${timer} ${timer > 1 ? "seconds" : "second"}</p>`;
         timer--;
-        timerDisplay.innerHTML = `${timer} ${timer > 1 ? "seconds" : "second"}`;
             if(timer == 0) {
                 isSubmitBtnClicked = true;
                 btnSubmit.click();
@@ -47,7 +46,6 @@ btnStart.onclick = () => {
 
 btnReset.onclick = () => {
     getDefaultValues();
-    isSubmitBtnClicked = true;
     questionsText.innerHTML = `<p style="color:blue;font-size:8rem;">Game has been reset!</p>`;
 }
 
@@ -85,6 +83,7 @@ function showLetters(data) {
 
     btnSubmit.onclick = () => {
         isSubmitBtnClicked = true;
+        btnReset.style.display = '';
         if(inputFieldAnswer.value.toUpperCase() === data.answer.toUpperCase()) {
             score++;
             if(score > highScore) {
@@ -92,10 +91,10 @@ function showLetters(data) {
                 highScoreText.innerHTML = highScore;
             }
             scoreText.innerHTML = score;
-            timerDisplay.innerHTML = `Correct!`;
+            timerDisplay.innerHTML = `<p class="timer-display" style="color:green;">Correct! ✔</p>`;
         }
         else {
-            timerDisplay.innerHTML = `${data.answer}`;
+            timerDisplay.innerHTML = `<p class="timer-display" style="color:red;">${data.answer}</p>`;
             lives--;
         }
         btnStart.disabled = false;
@@ -140,16 +139,6 @@ function setCharAt(str,index,char) {
     return str.substring(0,index) + char + str.substring(index+1);
 }
 
-// function checkLivesLeft(lives) {
-//     if(lives <= 0) {
-//         console.log("Reached");
-//         isSubmitBtnClicked = true;
-//         btnStart.disabled = true;
-//         livesLeft.innerHTML = `<p style="color:red;font-size:5rem;">0</p>`;
-//         questionsText.innerHTML = `<p style="color:red;font-size:8rem;">Game Over!</p>`;
-//     }
-// }
-
 function countNumberOfWords(words) {
     let numberOfWords = 1;
     for(let i = 0; i < words.length; i++) {
@@ -174,7 +163,7 @@ function getDefaultValues() {
     scoreText.innerHTML = score;
     highScoreText.innerHTML = highScore;
     btnStart.innerHTML = `Click here to start question #${questionNumber}`;
-    timerDisplay.innerHTML = `60 seconds`;
+    timerDisplay.innerHTML = `<p class="timer-display">60 seconds</p>`;
     inputFieldAnswer.value = "";
     lives = 5;
     livesLeft.innerHTML = lives;
