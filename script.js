@@ -9,6 +9,9 @@ const livesLeft = document.querySelector(".text-attempts-left");
 const questionsText = document.querySelector("#questions");
 const btnReset = document.querySelector(".btn-reset");
 const btnHint = document.querySelector(".btn-hint");
+const btnAbout = document.querySelector(".btn-about");
+const modal = document.getElementById("myModal");
+var span = document.getElementsByClassName("close")[0];
 let highScore = 0;
 let questionNumber;
 let timer;
@@ -47,6 +50,20 @@ btnStart.onclick = () => {
 btnReset.onclick = () => {
     getDefaultValues();
     questionsText.innerHTML = `<p style="color:blue;font-size:8rem;">Game has been reset!</p>`;
+}
+
+btnAbout.onclick = () => {
+    modal.style.display = "block";
+}
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
 }
 
 async function fetchQuestion(category) {
